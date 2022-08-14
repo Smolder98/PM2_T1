@@ -35,19 +35,19 @@ namespace PM2_T1.ViewModels
 
         private async Task EliminarEmpleado(Empleado empleado)
         {
-            bool confirm = await Application.Current.MainPage.DisplayAlert("Advertencia", "¿Esta seguro de eliminar a " + empleado.Nombre + "?", "Si", "No");
+            bool confirm = await Application.Current.MainPage.DisplayAlert("Aviso", "¿Quiere eliminar al empleado " + empleado.Nombre + "?", "Si", "No");
 
             if (confirm)
             {
                 bool response = await empleadoServices.DeleteEmpleado(empleado.Key);
                 if (response)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Advertencia", "Alumno Eliminada Correctamente", "Ok");
+                    await Application.Current.MainPage.DisplayAlert("Aviso", "Eliminado Correctamente", "Ok");
                     CargarDatos();
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Advertencia", "Se produjo un error al eliminar la persona", "Ok");
+                    await Application.Current.MainPage.DisplayAlert("Aviso", "Se produjo un error al eliminar", "Ok");
                 }
             }
         }
@@ -62,7 +62,7 @@ namespace PM2_T1.ViewModels
             ListaEmpleados = await empleadoServices.ListarEmpleados();
             if (ListaEmpleados.Count == 0)
             {
-                await Application.Current.MainPage.DisplayAlert("Advertencia", "No hay personas registradas", "Ok");
+                await Application.Current.MainPage.DisplayAlert("Aviso", "No hay empleados registrados", "Ok");
             }
         }
 

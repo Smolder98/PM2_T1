@@ -14,7 +14,12 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout Padding="5">
+
+    <StackLayout>
+        <Frame Margin="0" Padding="0" BackgroundColor="#D0D3D4">
+            <Label Text="Lista de Empleados" FontSize="20" HorizontalOptions="Center" />
+        </Frame>
+        <StackLayout Padding="5">
 
         <CollectionView ItemsSource="{Binding ListaEmpleados}"
                         VerticalOptions="CenterAndExpand">
@@ -22,7 +27,9 @@
             <CollectionView.ItemsLayout>
                 <GridItemsLayout Orientation="Vertical"
                                  Span="1"
-                                 VerticalItemSpacing="2"/>
+                                 VerticalItemSpacing="1"
+                                 
+                                 />
             </CollectionView.ItemsLayout>
 
             <CollectionView.ItemTemplate>
@@ -47,23 +54,29 @@
 
                         <Frame BackgroundColor="White"
                                CornerRadius="4"
+                               Margin="0"
+                               Padding="0"
                                HasShadow="False">
-                            <StackLayout Padding="3,5,0,5"
+                            
+                            <StackLayout Padding="1"
                                          Orientation="Horizontal">
-                                <Image Source="{Binding Foto,  Converter={StaticResource Base64ToImage}}" 
-                                        HeightRequest="24"
-                                        WidthRequest="24"/>
+                                
                                 <Label FontSize="15"
                                        Margin="5,0,0,0"
                                        HorizontalOptions="StartAndExpand" 
                                        VerticalOptions="Center">
                                     <Label.Text>
-                                        <MultiBinding StringFormat="{}{0} {1}">
+                                        <MultiBinding StringFormat="{}{0} {1} / {2}">
                                             <Binding Path="Nombre"/>
                                             <Binding Path="Apellidos"/>
+                                            <Binding Path="Puesto"/>
                                         </MultiBinding>
                                     </Label.Text>
                                 </Label>
+                                
+                                    <Image Source="{Binding Foto,  Converter={StaticResource Base64ToImage}}" 
+                                        HeightRequest="100"
+                                        WidthRequest="80"/>
                             </StackLayout>
                         </Frame>
 
@@ -74,5 +87,7 @@
         </CollectionView>
 
     </StackLayout>
+    </StackLayout>
+    
 
 </ContentPage>

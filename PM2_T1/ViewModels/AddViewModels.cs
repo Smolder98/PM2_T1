@@ -158,7 +158,7 @@ namespace PM2_T1.ViewModels
             string response = ValidarCampos();
             if (!response.Equals("OK"))
             {
-                await Application.Current.MainPage.DisplayAlert("Advertencia", response, "Ok");
+                await Application.Current.MainPage.DisplayAlert("Aviso", response, "Ok");
                 return;
             }
 
@@ -178,12 +178,12 @@ namespace PM2_T1.ViewModels
                 bool confirm = await services.UpdateEmpleado(empleado, key);
                 if (confirm)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Confirmacion", "Alumno actualizada correctamente.", "Ok");
+                    await Application.Current.MainPage.DisplayAlert("Aviso", "Actualizado correctamente.", "Ok");
                     await Application.Current.MainPage.Navigation.PopModalAsync();
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Confirmacion", "Se produjo un error al actualizar la persona.", "Ok");
+                    await Application.Current.MainPage.DisplayAlert("Aviso", "Se produjo un error al actualizar.", "Ok");
                 }
             }
             else
@@ -192,12 +192,12 @@ namespace PM2_T1.ViewModels
                 bool confirm = await services.InsertarEmpleado(empleado);
                 if (confirm)
                 {
-                    await Application.Current.MainPage.DisplayAlert("Confirmacion", "Alumno registrada correctamente.", "Ok");
+                    await Application.Current.MainPage.DisplayAlert("Aviso", "Registrado correctamente.", "Ok");
                     Limpiar();
                 }
                 else
                 {
-                    await Application.Current.MainPage.DisplayAlert("Confirmacion", "Se produjo un error al registrar la persona.", "Ok");
+                    await Application.Current.MainPage.DisplayAlert("Aviso", "Se produjo un error al registrar.", "Ok");
                 }
             }
 
@@ -218,39 +218,39 @@ namespace PM2_T1.ViewModels
         {
             if (string.IsNullOrEmpty(Nombre))
             {
-                return "Debes ingresar el nombre";
+                return "Debe existir un nombre.";
             }
             else if (!ValidateOnlyString(Nombre))
             {
-                return "Favor solo ingresar letras en su nombre.";
+                return "Solo debe ingresar letras en su nombres.";
             }
             else if (string.IsNullOrEmpty(Apellidos))
             {
-                return "Debes ingresar tus apellidos";
+                return "Debe ingresar sus apellidos";
             }
             else if (!ValidateOnlyString(Apellidos))
             {
-                return "Favor solo ingresar letras en tu apellido.";
+                return "Solo debe ingresar letras en tu apellidos.";
             }
             else if (string.IsNullOrEmpty(Edad))
             {
-                return "Debes ingresar la edad";
+                return "Debe ingresar una edad";
             }
             else if (!ValidateOnlyNumber(Edad))
             {
-                return "Favor ingresar solo numeros en tu edad";
+                return "Solo debe ingresar numeros en tu edad";
             }
             else if (string.IsNullOrEmpty(Direccion))
             {
-                return "Debes ingresar la direccion";
+                return "Debe ingresar la direccion";
             }
             else if (string.IsNullOrEmpty(Puesto))
             {
-                return "Debes ingresar el puesto";
+                return "Debe ingresar el puesto";
             }
             else if (string.IsNullOrEmpty(Foto))
             {
-                return "Debes ingresar la fotografia";
+                return "Debe ingresar la fotografia";
             }
 
             return "OK";
@@ -271,44 +271,10 @@ namespace PM2_T1.ViewModels
             await Application.Current.MainPage.Navigation.PushModalAsync(new ListPage());
         }
 
-        private async Task TomarFoto()
+        private Task TomarFoto()
         {
-            bool opcion = await Application.Current.MainPage.DisplayAlert("Aviso", "Seleccione la opcion de su preferencia", "Galeria", "Camara");
-
-            if (opcion)
-                GetImageFromGallery();
-            else
-                GetImageFromCamera();
-        }
-
-        private async void GetImageFromGallery()
-        {
-            try
-            {
-                if (CrossMedia.Current.IsPickPhotoSupported)
-                {
-                    var file = await CrossMedia.Current.PickPhotoAsync(new PickMediaOptions
-                    {
-                        PhotoSize = PhotoSize.Medium,
-                    });
-
-                    if (file == null)
-                        return;
-
-                    imagenEmpleado.Source = ImageSource.FromStream(() => { return file.GetStream(); });
-                    byte[] byteArray = File.ReadAllBytes(file.Path);
-                    Foto = System.Convert.ToBase64String(byteArray);
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("Advertencia", "Se produjo un error al seleccionar la imagen.", "Ok");
-                }
-            }
-            catch (Exception)
-            {
-                await Application.Current.MainPage.DisplayAlert("Advertencia", "Se produjo un error al seleccionar la imagen.", "Ok");
-            }
-
+            GetImageFromCamera();
+            return Task.CompletedTask;
         }
 
         private async void GetImageFromCamera()
@@ -329,7 +295,7 @@ namespace PM2_T1.ViewModels
             }
             catch (Exception)
             {
-                await Application.Current.MainPage.DisplayAlert("Advertencia", "Se produjo un error al tomar la fotografia.", "Ok");
+                await Application.Current.MainPage.DisplayAlert("Aviso", "Se produjo un error al tomar la fotografia.", "Ok");
             }
         }
 

@@ -68,7 +68,7 @@
                Placeholder="Ejemplo: Colonia Las Acacias, SPS"
                Keyboard="Text"/>
 
-            <Label Text="Puesto Trabajo" FontSize="20" />
+            <Label Text="Puesto de Trabajo" FontSize="20" />
             <Entry Text="{Binding Puesto}" 
                Placeholder="Ejemplo: diseñador"
                Keyboard="Text"/>
