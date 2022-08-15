@@ -35,21 +35,16 @@ namespace PM2_T1.ViewModels
 
         private async Task EliminarEmpleado(Empleado empleado)
         {
-            bool confirm = await Application.Current.MainPage.DisplayAlert("Aviso", "¿Quiere eliminar al empleado " + empleado.Nombre + "?", "Si", "No");
+            bool response = await empleadoServices.DeleteEmpleado(empleado.Key);
 
-            if (confirm)
+            if (response)
             {
-                bool response = await empleadoServices.DeleteEmpleado(empleado.Key);
-                if (response)
-                {
-                    await Application.Current.MainPage.DisplayAlert("Aviso", "Eliminado Correctamente", "Ok");
-                    CargarDatos();
-                }
-                else
-                {
-                    await Application.Current.MainPage.DisplayAlert("Aviso", "Se produjo un error al eliminar", "Ok");
-                }
+                await Application.Current.MainPage.DisplayAlert("Aviso", "Eliminado Correctamente", "Ok");
+                CargarDatos();
             }
+            else
+                await Application.Current.MainPage.DisplayAlert("Aviso", "Se produjo un error al eliminar", "Ok");
+            
         }
 
         private async Task EditarEmpleado(Empleado empleado)

@@ -211,7 +211,7 @@ namespace PM2_T1.ViewModels
             Direccion = "";
             Puesto = "";
             Foto = "";
-            imagenEmpleado.Source = null;
+            imagenEmpleado.Source = "profile.png";
         }
 
         private string ValidarCampos()
